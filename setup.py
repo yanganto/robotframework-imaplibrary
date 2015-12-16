@@ -1,33 +1,56 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-from os.path import join, dirname
+#    Copyright 2015 Richard Huang <rickypc@users.noreply.github.com>
+#
+#    Licensed under the Apache License, Version 2.0 (the "License");
+#    you may not use this file except in compliance with the License.
+#    You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#    Unless required by applicable law or agreed to in writing, software
+#    distributed under the License is distributed on an "AS IS" BASIS,
+#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    See the License for the specific language governing permissions and
+#    limitations under the License.
 
-execfile(join(dirname(__file__), 'src', 'ImapLibrary', 'version.py'))
+"""
+IMAP Library - a IMAP email testing library.
+"""
 
-from distutils.core import setup
+# To use a consistent encoding
+import codecs
+from os.path import abspath, dirname, join
+# Always prefer setuptools over distutils
+from setuptools import setup, find_packages
 
-CLASSIFIERS = """
-Programming Language :: Python
-Topic :: Software Development :: Testing
-"""[1:-1]
+LIBRARY_NAME = 'ImapLibrary'
+CWD = abspath(dirname(__file__))
+execfile(join(CWD, 'src', LIBRARY_NAME, 'version.py'))
 
-long_description=open(join(dirname(__file__), 'README.rst',)).read()
+with codecs.open(join(CWD, 'README.rst'), encoding='utf-8') as reader:
+    LONG_DESCRIPTION = reader.read()
 
 setup(
-  name             = 'robotframework-imaplibrary',
-  version          = VERSION,
-  description      = 'Robot Framework IMAP Mail Check Library',
-  long_description = long_description,
-  author           = 'Lovely Systems GmbH',
-  author_email     = 'office@lovelysystems.com',
-  url              = 'https://github.com/lovelysystems/robotframework-imaplibrary',
-  license          = 'Apache License 2.0',
-  keywords         = 'robotframework testing testautomation imap mail',
-  platforms        = 'any',
-  zip_safe         = False,
-  classifiers      = CLASSIFIERS.splitlines(),
-  package_dir      = {'' : 'src'},
-  install_requires = ['robotframework'],
-  extras_require = dict(test=['zope.testing']),
-  packages         = ['ImapLibrary'],
+    name='robotframework-%s' % LIBRARY_NAME.lower(),
+    version=VERSION,  # pylint: disable=undefined-variable  # noqa
+    description='A IMAP email testing library for Robot Framework',
+    long_description=LONG_DESCRIPTION,
+    url='https://github.com/rickypc/robotframework-%s' % LIBRARY_NAME.lower(),
+    author='Richard Huang',
+    author_email='rickypc@users.noreply.github.com',
+    license='Apache License, Version 2.0',
+    classifiers=[
+        'Development Status :: 4 - Beta',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development :: Testing',
+        'License :: OSI Approved :: Apache Software License',
+        'Programming Language :: Python :: 2.7',
+    ],
+    keywords='robot framework testing automation imap email mail softwaretesting',
+    platforms='any',
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    install_requires=['robotframework >= 2.6.0']
 )
