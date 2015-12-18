@@ -12,9 +12,21 @@ More information about this library can be found in the `Keyword Documentation`_
 
 Non-Backward Compatible Warning
 -------------------------------
+
 There are inevitable changes to parameter names that would not be backward compatible with
 release 0.1.4 downwards.
 These changes are made to comply with Python code style guide on `Method Names and Instance Variables`_.
+
+Authoritative Repository
+------------------------
+
+This repository is the new authoritative repository for robotframework-imaplibrary package,
+and I am also the new project maintainer for robotframework-imaplibrary project.
+
+I will go through the pull requests from old repository, as well as issue list.
+I will try to accomodate as much as I could as time permit. **There is no need to re-post.**
+
+If you are interested to contribute back to this project, please see **Contributing** section.
 
 Example
 '''''''
