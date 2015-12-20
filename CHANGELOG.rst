@@ -1,3 +1,14 @@
+0.2.1 (2015.12.20)
+==================
+
+* Add subject and text filters
+* Add non-secure connection support
+* Adjust documentation
+* Add more unit test
+* Add backward compatible support
+* Add `Delete All Emails`, `Delete Email`, `Mark All Emails As Read`, and `Mark Email As Read` keywords
+* Add alternative keyword to deprecated keywords
+
 0.2.0 (2015.12.15)
 ==================
 

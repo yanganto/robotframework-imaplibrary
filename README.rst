@@ -10,18 +10,11 @@ ImapLibrary is a IMAP email testing library for `Robot Framework`_.
 
 More information about this library can be found in the `Keyword Documentation`_.
 
-Non-Backward Compatible Warning
--------------------------------
-
-There are inevitable changes to parameter names that would not be backward compatible with
-release 0.1.4 downwards.
-These changes are made to comply with Python code style guide on `Method Names and Instance Variables`_.
-
 Authoritative Repository
 ------------------------
 
-This repository is the new authoritative repository for robotframework-imaplibrary package,
-and I am also the new project maintainer for robotframework-imaplibrary project.
+This repository is the new authoritative repository for `robotframework-imaplibrary`_ package,
+and I am also the new project maintainer for `robotframework-imaplibrary`_ project.
 
 I will go through the pull requests from old repository, as well as issue list.
 I will try to accomodate as much as I could as time permit. **There is no need to re-post.**
@@ -31,46 +24,46 @@ If you are interested to contribute back to this project, please see **Contribut
 Example
 '''''''
 
-+----------------+----------------------------+-------------------------------+-----------------+
-| Open Mailbox   | server=imap.googlemail.com | user=email@gmail.com          | password=secret |
-+----------------+----------------------------+-------------------------------+-----------------+
-| ${LATEST} =    | Wait For Mail              | from_email=noreply@domain.com | timeout=300     |
-+----------------+----------------------------+-------------------------------+-----------------+
-| ${HTML} =      | Open Link From Mail        | ${LATEST}                                       |
-+----------------+----------------------------+-------------------------------------------------+
-| Should Contain | ${HTML}                    | Your email address has been updated             |
-+----------------+----------------------------+-------------------------------------------------+
-| Close Mailbox                                                                                 |
-+-----------------------------------------------------------------------------------------------+
++----------------+----------------------+---------------------------+-----------------+
+| Open Mailbox   | host=imap.domain.com | user=email@domain.com     | password=secret |
++----------------+----------------------+---------------------------+-----------------+
+| ${LATEST} =    | Wait For Email       | sender=noreply@domain.com | timeout=300     |
++----------------+----------------------+---------------------------+-----------------+
+| ${HTML} =      | Open Link From Email | ${LATEST}                                   |
++----------------+----------------------+---------------------------------------------+
+| Should Contain | ${HTML}              | Your email address has been updated         |
++----------------+----------------------+---------------------------------------------+
+| Close Mailbox                                                                       |
++-------------------------------------------------------------------------------------+
 
 Multipart Email Example
 '''''''''''''''''''''''
 
-+----------------+----------------------------+-------------------------------+-----------------+
-| Open Mailbox   | server=imap.googlemail.com | user=email@gmail.com          | password=secret |
-+----------------+----------------------------+-------------------------------+-----------------+
-| ${LATEST} =    | Wait For Mail              | from_email=noreply@domain.com | timeout=300     |
-+----------------+----------------------------+-------------------------------+-----------------+
-| ${parts} =     | Walk Multipart Email       | ${LATEST}                                       |
-+----------------+----------------------------+-------------------------------+-----------------+
-| :FOR           | ${i}                       | IN RANGE                      | ${parts}        |
-+----------------+----------------------------+-------------------------------+-----------------+
-| \\             | Walk Multipart Email       | ${LATEST}                                       |
-+----------------+----------------------------+-------------------------------------------------+
-| \\             | ${content-type} =          | Get Multipart Content Type                      |
-+----------------+----------------------------+-------------------------------------------------+
-| \\             | Continue For Loop If       | '${content-type}' != 'text/html'                |
-+----------------+----------------------------+-------------------------------+-----------------+
-| \\             | ${payload} =               | Get Multipart Payload         | decode=True     |
-+----------------+----------------------------+-------------------------------+-----------------+
-| \\             | Should Contain             | ${payload}                    | your email      |
-+----------------+----------------------------+-------------------------------+-----------------+
-| \\             | ${HTML} =                  | Open Link From Mail           | ${LATEST}       |
-+----------------+----------------------------+-------------------------------+-----------------+
-| \\             | Should Contain             | ${HTML}                       | Your email      |
-+----------------+----------------------------+-------------------------------+-----------------+
-| Close Mailbox                                                                                 |
-+-----------------------------------------------------------------------------------------------+
++----------------+----------------------+---------------------------+-----------------+
+| Open Mailbox   | host=imap.domain.com | user=email@domain.com     | password=secret |
++----------------+----------------------+---------------------------+-----------------+
+| ${LATEST} =    | Wait For Email       | sender=noreply@domain.com | timeout=300     |
++----------------+----------------------+---------------------------+-----------------+
+| ${parts} =     | Walk Multipart Email | ${LATEST}                                   |
++----------------+----------------------+---------------------------+-----------------+
+| :FOR           | ${i}                 | IN RANGE                  | ${parts}        |
++----------------+----------------------+---------------------------+-----------------+
+| \\             | Walk Multipart Email | ${LATEST}                                   |
++----------------+----------------------+---------------------------------------------+
+| \\             | ${content-type} =    | Get Multipart Content Type                  |
++----------------+----------------------+---------------------------------------------+
+| \\             | Continue For Loop If | '${content-type}' != 'text/html'            |
++----------------+----------------------+---------------------------+-----------------+
+| \\             | ${payload} =         | Get Multipart Payload     | decode=True     |
++----------------+----------------------+---------------------------+-----------------+
+| \\             | Should Contain       | ${payload}                | your email      |
++----------------+----------------------+---------------------------+-----------------+
+| \\             | ${HTML} =            | Open Link From Email      | ${LATEST}       |
++----------------+----------------------+---------------------------+-----------------+
+| \\             | Should Contain       | ${HTML}                   | Your email      |
++----------------+----------------------+---------------------------+-----------------+
+| Close Mailbox                                                                       |
++-------------------------------------------------------------------------------------+
 
 Installation
 ------------
@@ -233,12 +226,12 @@ Documentation and other similar content are provided under `Creative Commons Att
 .. _Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License: http://goo.gl/SNw73V
 .. _Imap Library CLA: https://goo.gl/forms/QMyqXJI2LM
 .. _Keyword Documentation: https://goo.gl/ntRuxC
-.. _Method Names and Instance Variables: https://goo.gl/NxxD0n
 .. _pip: http://goo.gl/jlJCPE
 .. _Robot Framework: http://goo.gl/lES6WM
 .. _Robot Framework Documentation: http://goo.gl/zy53tf
 .. _Robot Framework installed: https://goo.gl/PFbWqM
 .. _Robot Framework User Guide: http://goo.gl/Q7dfPB
+.. _robotframework-imaplibrary: https://goo.gl/q66LcA
 .. |Docs| image:: https://img.shields.io/badge/docs-latest-brightgreen.svg
     :target: https://goo.gl/ntRuxC
     :alt: Keyword Documentation
