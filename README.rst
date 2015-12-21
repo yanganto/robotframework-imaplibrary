@@ -10,13 +10,15 @@ ImapLibrary is a IMAP email testing library for `Robot Framework`_.
 
 More information about this library can be found in the `Keyword Documentation`_.
 
-Authoritative Repository
-------------------------
+Maintainership Transfer
+-----------------------
 
-This repository is the new authoritative repository for `robotframework-imaplibrary`_ package,
-and I am also the new project maintainer for `robotframework-imaplibrary`_ project.
+Please note the new authoritative git repository for `robotframework-imaplibrary`_ package is:
+https://github.com/rickypc/robotframework-imaplibrary
 
-I will go through the pull requests from old repository, as well as issue list.
+`robotframework-imaplibrary`_ package ownership is transitioned to me as the new project maintainer.
+
+I will go through the pull requests from previous repository, as well as issue list.
 I will try to accomodate as much as I could as time permit. **There is no need to re-post.**
 
 If you are interested to contribute back to this project, please see **Contributing** section.
