@@ -19,12 +19,16 @@
 IMAP Library - a IMAP email testing library.
 """
 
+from email import message_from_string
 from imaplib import IMAP4, IMAP4_SSL
-from ImapLibrary.version import get_version
 from re import findall
 from time import sleep, time
-import email
-import urllib2
+try:
+    from urllib.request import urlopen
+except ImportError:
+    from urllib2 import urlopen
+from builtins import str as ustr
+from ImapLibrary.version import get_version
 
 __version__ = get_version()
 
@@ -239,11 +243,11 @@ class ImapLibrary(object):
         urls = self.get_links_from_email(email_index)
 
         if len(urls) > link_index:
-            resp = urllib2.urlopen(urls[link_index])
+            resp = urlopen(urls[link_index])
             content_type = resp.headers.getheader('content-type')
             if content_type:
                 enc = content_type.split('charset=')[-1]
-                return unicode(resp.read(), enc)
+                return ustr(resp.read(), enc)
             else:
                 return resp.read()
         else:
@@ -328,7 +332,7 @@ class ImapLibrary(object):
         """
         if not self._is_walking_multipart(email_index):
             data = self._imap.fetch(email_index, '(RFC822)')[1][0][1]
-            msg = email.message_from_string(data)
+            msg = message_from_string(data)
             self._start_multipart_walk(email_index, msg)
         try:
             self._part = next(self._mp_iter)

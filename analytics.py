@@ -19,7 +19,6 @@
 IMAP Library - a IMAP email testing library.
 """
 
-from __future__ import print_function
 from os.path import split
 from re import sub
 import sys

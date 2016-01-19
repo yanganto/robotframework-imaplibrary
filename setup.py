@@ -27,7 +27,8 @@ from setuptools import setup, find_packages
 
 LIBRARY_NAME = 'ImapLibrary'
 CWD = abspath(dirname(__file__))
-execfile(join(CWD, 'src', LIBRARY_NAME, 'version.py'))
+VERSION_PATH = join(CWD, 'src', LIBRARY_NAME, 'version.py')
+exec(compile(open(VERSION_PATH).read(), VERSION_PATH, 'exec'))
 
 with codecs.open(join(CWD, 'README.rst'), encoding='utf-8') as reader:
     LONG_DESCRIPTION = reader.read()
@@ -47,10 +48,11 @@ setup(
         'Topic :: Software Development :: Testing',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.5',
     ],
     keywords='robot framework testing automation imap email mail softwaretesting',
     platforms='any',
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    install_requires=['robotframework >= 2.6.0']
+    install_requires=['future', 'robotframework >= 2.6.0']
 )

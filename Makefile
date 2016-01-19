@@ -38,7 +38,7 @@ install_devel_deps:
 	pip install coverage mock
 
 lint:clean
-	flake8 --max-complexity 10
+	flake8 --max-complexity 10 src/$(LIBRARY_NAME)/*.py
 	pylint --rcfile=setup.cfg src/$(LIBRARY_NAME)/*.py
 
 test:clean

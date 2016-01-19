@@ -23,49 +23,35 @@ I will try to accomodate as much as I could as time permit. **There is no need t
 
 If you are interested to contribute back to this project, please see **Contributing** section.
 
-Example
-'''''''
+Examples
+''''''''
 
-+----------------+----------------------+---------------------------+-----------------+
-| Open Mailbox   | host=imap.domain.com | user=email@domain.com     | password=secret |
-+----------------+----------------------+---------------------------+-----------------+
-| ${LATEST} =    | Wait For Email       | sender=noreply@domain.com | timeout=300     |
-+----------------+----------------------+---------------------------+-----------------+
-| ${HTML} =      | Open Link From Email | ${LATEST}                                   |
-+----------------+----------------------+---------------------------------------------+
-| Should Contain | ${HTML}              | Your email address has been updated         |
-+----------------+----------------------+---------------------------------------------+
-| Close Mailbox                                                                       |
-+-------------------------------------------------------------------------------------+
+.. code:: robotframework
 
-Multipart Email Example
-'''''''''''''''''''''''
+    *** Settings ***
+    Library    ImapLibrary
 
-+----------------+----------------------+---------------------------+-----------------+
-| Open Mailbox   | host=imap.domain.com | user=email@domain.com     | password=secret |
-+----------------+----------------------+---------------------------+-----------------+
-| ${LATEST} =    | Wait For Email       | sender=noreply@domain.com | timeout=300     |
-+----------------+----------------------+---------------------------+-----------------+
-| ${parts} =     | Walk Multipart Email | ${LATEST}                                   |
-+----------------+----------------------+---------------------------+-----------------+
-| :FOR           | ${i}                 | IN RANGE                  | ${parts}        |
-+----------------+----------------------+---------------------------+-----------------+
-| \\             | Walk Multipart Email | ${LATEST}                                   |
-+----------------+----------------------+---------------------------------------------+
-| \\             | ${content-type} =    | Get Multipart Content Type                  |
-+----------------+----------------------+---------------------------------------------+
-| \\             | Continue For Loop If | '${content-type}' != 'text/html'            |
-+----------------+----------------------+---------------------------+-----------------+
-| \\             | ${payload} =         | Get Multipart Payload     | decode=True     |
-+----------------+----------------------+---------------------------+-----------------+
-| \\             | Should Contain       | ${payload}                | your email      |
-+----------------+----------------------+---------------------------+-----------------+
-| \\             | ${HTML} =            | Open Link From Email      | ${LATEST}       |
-+----------------+----------------------+---------------------------+-----------------+
-| \\             | Should Contain       | ${HTML}                   | Your email      |
-+----------------+----------------------+---------------------------+-----------------+
-| Close Mailbox                                                                       |
-+-------------------------------------------------------------------------------------+
+    *** Test Cases ***
+    Email Verification
+        Open Mailbox    host=imap.domain.com    user=email@domain.com    password=secret
+        ${LATEST} =    Wait For Email    sender=noreply@domain.com    timeout=300
+        ${HTML} =    Open Link From Email    ${LATEST}
+        Should Contain    ${HTML}    Your email address has been updated
+        Close Mailbox
+
+    Multipart Email Verification
+        Open Mailbox    host=imap.domain.com    user=email@domain.com    password=secret
+        ${LATEST} =    Wait For Email    sender=noreply@domain.com    timeout=300
+        ${parts} =    Walk Multipart Email    ${LATEST}
+        :FOR    ${i}    IN RANGE    ${parts}
+        \\    Walk Multipart Email    ${LATEST}
+        \\    ${content-type} =    Get Multipart Content Type
+        \\    Continue For Loop If    '${content-type}' != 'text/html'
+        \\    ${payload} =    Get Multipart Payload    decode=True
+        \\    Should Contain    ${payload}    your email
+        \\    ${HTML} =    Open Link From Email    ${LATEST}
+        \\    Should Contain    ${HTML}    Your email
+        Close Mailbox
 
 Installation
 ------------
@@ -75,7 +61,7 @@ Using ``pip``
 
 The recommended installation method is using pip_:
 
-.. code:: bash
+.. code:: console
 
     pip install robotframework-imaplibrary
 
@@ -83,7 +69,7 @@ The main benefit of using ``pip`` is that it automatically installs all
 dependencies needed by the library. Other nice features are easy upgrading
 and support for un-installation:
 
-.. code:: bash
+.. code:: console
 
     pip install --upgrade robotframework-imaplibrary
     pip uninstall robotframework-imaplibrary
@@ -92,7 +78,7 @@ Notice that using ``--upgrade`` above updates both the library and all
 its dependencies to the latest version. If you want, you can also install
 a specific version:
 
-.. code:: bash
+.. code:: console
 
     pip install robotframework-imaplibrary==x.x.x
 
@@ -128,7 +114,7 @@ and its dependencies yourself.
 
 - Find each public key used to sign the package:
 
-.. code:: bash
+.. code:: console
 
     gpg --keyserver pgp.mit.edu --search-keys D1406DE7
 
@@ -136,7 +122,7 @@ and its dependencies yourself.
 
 - Verify the package against its PGP signature:
 
-.. code:: bash
+.. code:: console
 
     gpg --verify robotframework-imaplibrary-x.x.x.tar.gz.asc robotframework-imaplibrary-x.x.x.tar.gz
 
@@ -144,7 +130,7 @@ and its dependencies yourself.
 
 - Go to each created directory from the command line and install each project using:
 
-.. code:: bash
+.. code:: console
 
        python setup.py install
 
@@ -174,11 +160,10 @@ Usage
 To write tests with Robot Framework and ImapLibrary,
 ImapLibrary must be imported into your Robot test suite.
 
-+-----------------------+
-| *** Settings ***      |
-+---------+-------------+
-| Library | ImapLibrary |
-+---------+-------------+
+.. code:: robotframework
+
+    *** Settings ***
+    Library  ImapLibrary
 
 See `Robot Framework User Guide`_ for more information.
 
@@ -190,7 +175,7 @@ Building Keyword Documentation
 
 The `Keyword Documentation`_ can be found online, if you need to generate the keyword documentation, run:
 
-.. code:: bash
+.. code:: console
 
     make doc
 
@@ -199,7 +184,7 @@ Run Unit Tests, and Test Coverage Report
 
 Test the testing library, talking about dogfooding, let's run:
 
-.. code:: bash
+.. code:: console
 
     make test
 
