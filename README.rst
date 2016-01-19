@@ -202,7 +202,7 @@ That's it! Thank you for your contribution!
 License
 -------
 
-Copyright (c) 2015 Richard Huang.
+Copyright (c) 2015-2016 Richard Huang.
 
 This library is free software, licensed under: `Apache License, Version 2.0`_.
 
