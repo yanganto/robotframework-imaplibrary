@@ -1,3 +1,10 @@
+0.2.3 (2016.01.19)
+==================
+
+* Multi-words email subject search bugfixes
+* Adjust documentation
+* Adjust test cases
+
 0.2.2 (2016.01.19)
 ==================
 

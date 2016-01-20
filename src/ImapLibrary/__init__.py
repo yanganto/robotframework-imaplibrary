@@ -294,6 +294,7 @@ class ImapLibrary(object):
                       ``UIDVALIDITY``, and ``UNSEEN``.
                       Please see [https://goo.gl/3KKHoY|Mailbox Status] for more information.
                       (Default None)
+        - ``subject``: Email subject. (Default None)
         - ``text``: Email body text. (Default None)
         - ``timeout``: The maximum value in seconds to wait for email message to arrived.
                        (Default 60)
@@ -364,13 +365,13 @@ class ImapLibrary(object):
         subject = kwargs.pop('subject', None)
         text = kwargs.pop('text', None)
         if recipient:
-            criteria += ['TO', recipient]
+            criteria += ['TO', '"%s"' % recipient]
         if sender:
-            criteria += ['FROM', sender]
+            criteria += ['FROM', '"%s"' % sender]
         if subject:
-            criteria += ['SUBJECT', subject]
+            criteria += ['SUBJECT', '"%s"' % subject]
         if text:
-            criteria += ['TEXT', text]
+            criteria += ['TEXT', '"%s"' % text]
         if status:
             criteria += [status]
         if not criteria:

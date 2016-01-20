@@ -108,7 +108,8 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.search.return_value = ['OK', ['0']]
         index = self.library.wait_for_email(sender=self.sender)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'FROM', self.sender)
+        self.library._imap.search.assert_called_with(None, 'FROM', '"%s"' %
+                                                     self.sender)
         self.assertEqual(index, '0')
 
     @mock.patch('ImapLibrary.IMAP4_SSL')
@@ -122,15 +123,18 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.search.return_value = ['OK', ['0']]
         index = self.library.wait_for_email(sender=self.sender)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'FROM', self.sender)
+        self.library._imap.search.assert_called_with(None, 'FROM', '"%s"' %
+                                                     self.sender)
         self.assertEqual(index, '0')
         index = self.library.wait_for_email(from_email=self.sender)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'FROM', self.sender)
+        self.library._imap.search.assert_called_with(None, 'FROM', '"%s"' %
+                                                     self.sender)
         self.assertEqual(index, '0')
         index = self.library.wait_for_email(fromEmail=self.sender)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'FROM', self.sender)
+        self.library._imap.search.assert_called_with(None, 'FROM', '"%s"' %
+                                                     self.sender)
         self.assertEqual(index, '0')
 
     @mock.patch('ImapLibrary.IMAP4_SSL')
@@ -144,15 +148,18 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.search.return_value = ['OK', ['0']]
         index = self.library.wait_for_email(recipient=self.recipient)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'TO', self.recipient)
+        self.library._imap.search.assert_called_with(None, 'TO', '"%s"' %
+                                                     self.recipient)
         self.assertEqual(index, '0')
         index = self.library.wait_for_email(to_email=self.recipient)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'TO', self.recipient)
+        self.library._imap.search.assert_called_with(None, 'TO', '"%s"' %
+                                                     self.recipient)
         self.assertEqual(index, '0')
         index = self.library.wait_for_email(toEmail=self.recipient)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'TO', self.recipient)
+        self.library._imap.search.assert_called_with(None, 'TO', '"%s"' %
+                                                     self.recipient)
         self.assertEqual(index, '0')
 
     @mock.patch('ImapLibrary.IMAP4_SSL')
@@ -166,7 +173,8 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.search.return_value = ['OK', ['0']]
         index = self.library.wait_for_email(subject=self.subject)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'SUBJECT', self.subject)
+        self.library._imap.search.assert_called_with(None, 'SUBJECT', '"%s"' %
+                                                     self.subject)
         self.assertEqual(index, '0')
 
     @mock.patch('ImapLibrary.IMAP4_SSL')
@@ -178,7 +186,8 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.search.return_value = ['OK', ['0']]
         index = self.library.wait_for_email(text=self.text)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'TEXT', self.text)
+        self.library._imap.search.assert_called_with(None, 'TEXT', '"%s"' %
+                                                     self.text)
         self.assertEqual(index, '0')
 
     @mock.patch('ImapLibrary.IMAP4_SSL')
@@ -217,7 +226,8 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.search.return_value = ['OK', ['0']]
         index = self.library.wait_for_mail(sender=self.sender)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'FROM', self.sender)
+        self.library._imap.search.assert_called_with(None, 'FROM', '"%s"' %
+                                                     self.sender)
         self.assertEqual(index, '0')
 
     @mock.patch('ImapLibrary.IMAP4_SSL')
@@ -229,7 +239,8 @@ class ImapLibraryTests(unittest.TestCase):
         self.library._imap.search.side_effect = [['OK', ['']], ['OK', ['0']]]
         index = self.library.wait_for_email(sender=self.sender, poll_frequency=0.2)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'FROM', self.sender)
+        self.library._imap.search.assert_called_with(None, 'FROM', '"%s"' %
+                                                     self.sender)
         self.assertEqual(index, '0')
 
     @mock.patch('ImapLibrary.IMAP4_SSL')
@@ -268,7 +279,8 @@ class ImapLibraryTests(unittest.TestCase):
             self.assertTrue("imap.search error: NOK, [''], criteria=['FROM', '%s']" %
                             self.sender in context.exception)
         self.library._imap.select.assert_called_with()
-        self.library._imap.search.assert_called_with(None, 'FROM', self.sender)
+        self.library._imap.search.assert_called_with(None, 'FROM', '"%s"' %
+                                                     self.sender)
 
     @mock.patch('ImapLibrary.IMAP4_SSL')
     def test_should_delete_all_emails(self, mock_imap):

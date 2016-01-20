@@ -19,7 +19,7 @@
 IMAP Library - a IMAP email testing library.
 """
 
-VERSION = '0.2.2'
+VERSION = '0.2.3'
 
 
 def get_version():
