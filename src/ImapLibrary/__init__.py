@@ -29,6 +29,7 @@ except ImportError:
     from urllib2 import urlopen
 from builtins import str as ustr
 from ImapLibrary.version import get_version
+import base64
 
 __version__ = get_version()
 
@@ -268,8 +269,7 @@ class ImapLibrary(object):
         - ``password``: The plaintext password to be use to authenticate mailbox on given ``host``.
         - ``port``: The IMAP port number. (Default None)
         - ``user``: The username to be use to authenticate mailbox on given ``host``.
-
-        Examples:
+:
         | Open Mailbox | host=HOST | user=USER | password=SECRET |
         | Open Mailbox | host=HOST | user=USER | password=SECRET | is_secure=False |
         | Open Mailbox | host=HOST | user=USER | password=SECRET | port=8000 |
@@ -318,6 +318,22 @@ class ImapLibrary(object):
         Shortcut to `Wait For Email`.
         """
         return self.wait_for_email(**kwargs)
+
+    def get_phish_link(self):
+        """
+        Returns the url for last email
+        """
+        criteria = self._criteria()
+        status, data = self._imap.select()
+        if status != 'OK':
+            raise Exception("imap.select error: %s, %s" % (status, data))
+        typ, msgnums = self._imap.search(None, *criteria)
+        if typ != 'OK':
+            raise Exception('imap.search error: %s, %s, criteria=%s' % (typ, msgnums, criteria))
+        body = self._imap.fetch(data[0], '(BODY[TEXT])')[1][0][1].decode('utf-8')
+        body = ''.join(body.replace('\r','').split('\n')[4:-1])
+        content = base64.standard_b64decode(body).decode('utf-8')
+        return findall(r'href=[\'"]?([^\'" >]+)', content)[0]
 
     def walk_multipart_email(self, email_index):
         """Returns total parts of a multipart email message on given ``email_index``.
