@@ -335,6 +335,22 @@ class ImapLibrary(object):
         content = base64.standard_b64decode(body).decode('utf-8')
         return findall(r'href=[\'"]?([^\'" >]+)', content)[0]
 
+    def get_trace_img(self):
+        """
+        Returns the trace img for last email
+        """
+        criteria = self._criteria()
+        status, data = self._imap.select()
+        if status != 'OK':
+            raise Exception("imap.select error: %s, %s" % (status, data))
+        typ, msgnums = self._imap.search(None, *criteria)
+        if typ != 'OK':
+            raise Exception('imap.search error: %s, %s, criteria=%s' % (typ, msgnums, criteria))
+        body = self._imap.fetch(data[0], '(BODY[TEXT])')[1][0][1].decode('utf-8')
+        body = ''.join(body.replace('\r','').split('\n')[4:-1])
+        content = base64.standard_b64decode(body).decode('utf-8')
+        return findall(r'src=[\'"]?([^\'" >]+)', content)[-1]
+
     def walk_multipart_email(self, email_index):
         """Returns total parts of a multipart email message on given ``email_index``.
         Email message is cache internally to be used by other multipart keywords:
